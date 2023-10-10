@@ -35,7 +35,7 @@ To address this, we turned to Module Federation. This technology allowed us to e
 
 ## An Example of Module Federation
 
-> The code for this example can be found in the [module-federation-example]() repository.
+> The code for this example can be found in the [module-federation-example](https://github.com/Codingiri/module-federation) repository.
 
 Let's illustrate Module Federation with a simple example. We have two projects created with Vite and React: one serves as the host, and the other as the remote. In this scenario, we want to share a "HelloWorld" component from the remote project with the host. The host application consumes this component and can pass props to it.
 

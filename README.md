@@ -1,5 +1,7 @@
 # Harnessing Module Federation and Micro-Frontends for Modern Web Development
 
+![Modue-Federation](./module-federation.svg)
+
 In the dynamic realm of web development, the paradigms of Module Federation and Micro-Frontends have emerged as pivotal strategies. They provide developers with the tools to disassemble monolithic web applications into discrete, self-contained components. This article offers a glimpse into the world of Micro-Frontends and the enabling power of Module Federation. We embark on a journey to understand these concepts, exploring their applications and advantages. Through real-world scenarios, we uncover how Module Federation revolutionizes collaboration and code-sharing, ushering in a new era of web development.
 
 ## What Are Micro-Frontends?
@@ -17,6 +19,8 @@ Micro-frontends can be implemented using various techniques and approaches. Here
 3. **JavaScript Module Federation:**
    - **Module Federation:** This is a modern way. Micro-frontends are like separate apps that can be loaded by the main app when needed. They share specific parts (modules) with each other, like Lego pieces you can connect and use in different places.
 
+![Micro-Frontend Techniques](./micro-frontend-techniques.svg)
+
 ## Exploring Module Federation
 
 Module Federation is commonly used in micro-frontends, where different teams or development groups are responsible for various parts of a web application, and it allows them to work independently while still integrating their components into a cohesive whole.
@@ -25,7 +29,7 @@ Module Federation is a technology initially introduced in Webpack 5, primarily u
 
 ### How Does Module Federation Work
 
-Module Federation works by exposing a set of modules from one application and consuming them in another application. The application that exposes the modules is called the **host application**, and the application that consumes the modules is called the **remote application**. TThe host application configures which modules it wants to share, and the remote application configures which modules it wants to consume. This configuration is done using the Module Federation plugin.
+Module Federation works by exposing a set of modules from one application and consuming them in another application. The application that exposes the modules is called the **remote application**, and the application that consumes the modules is called the **host application**. The remote application configures which modules it wants to share, and the host application configures which modules it wants to consume. This configuration is done using the Module Federation plugin.
 
 ### Benefits of Using Module Federation
 
@@ -35,11 +39,26 @@ To address this, we turned to Module Federation. This technology allowed us to e
 
 ## An Example of Module Federation
 
-> The code for this example can be found in the [module-federation-example](https://github.com/Codingiri/module-federation) repository.
+> The code for this example can be found in the [module-federation](https://github.com/Codingiri/module-federation) repository.
 
 Let's illustrate Module Federation with a simple example. We have two projects created with Vite and React: one serves as the host, and the other as the remote. In this scenario, we want to share a "HelloWorld" component from the remote project with the host. The host application consumes this component and can pass props to it.
 
-- Remote App exposes the "HelloWorld" component:
+- `HelloWorld` component in Remote App:
+
+```js
+// remote-app/src/components/HelloWorld.jsx
+import PropTypes from "prop-types";
+
+export default function HelloWorld({ msg }) {
+  return <h1>{msg}</h1>;
+}
+
+HelloWorld.propTypes = {
+  msg: PropTypes.string.isRequired,
+};
+```
+
+- Remote App exposes the `HelloWorld` component:
 
 ```js
 // remote-app/vite.config.js
@@ -53,7 +72,7 @@ federation({
 });
 ```
 
-- Host App consumes the "HelloWorld" component:
+- Host App consumes the `HelloWorld` component:
 
 ```js
 // host-app/vite.config.js
@@ -64,6 +83,20 @@ federation({
   },
   shared: ["react"],
 });
+```
+
+- import `HelloWorld` component:
+
+```js
+// host-app/src/App.jsx
+import HelloWorld from "remote-app/HelloWorld";
+// ...
+// rest of code
+// ...
+<HelloWorld msg="Host App" />;
+// ...
+// rest of code
+// ...
 ```
 
 ## Conclusion
